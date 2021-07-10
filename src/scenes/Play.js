@@ -22,10 +22,16 @@ class Play extends Phaser.Scene {
             fixedWidth: 0
         }
 
+        //text in background
         this.add.text(game.config.width/2, game.config.height/2, 'Play Scene', gameText).setOrigin(0.5);
+
+        //player game objects (character, loot, textures)
+        this.playerC = this.add.rectangle(game.config.width/2, game.config.height/2, borderUISize, borderUISize, 0xF5E050).setOrigin(0.5);
     }
 
     update() {
+        this.playerC.x = game.input.mousePointer.x;
+        this.playerC.y = game.input.mousePointer.y;
         
     }
 
