@@ -25,7 +25,9 @@ class Play extends Phaser.Scene {
         //text in background
         this.add.text(game.config.width/2, game.config.height/2, 'Play Scene', gameText).setOrigin(0.5);
 
-        //player game objects (character, loot, textures)
+        //player game objects
+        //note: player must be last in list to show on top
+        this.lootC = this.add.rectangle(game.config.width/2, game.config.height/2 - borderUISize, borderUISize, borderUISize, 0xF50000).setOrigin(0.5);
         this.playerC = this.add.rectangle(game.config.width/2, game.config.height/2, borderUISize, borderUISize, 0xF5E050).setOrigin(0.5);
     }
 
@@ -33,6 +35,9 @@ class Play extends Phaser.Scene {
         this.playerC.x = game.input.mousePointer.x;
         this.playerC.y = game.input.mousePointer.y;
         
+        if(game.input.mousePointer.buttons > 0){
+            console.log('click');
+        }
     }
 
     checkCollision(rocket, ship){
