@@ -25,10 +25,13 @@ class Play extends Phaser.Scene {
         //text in background
         this.add.text(game.config.width/2, game.config.height/2, 'Play Scene', gameText).setOrigin(0.5);
 
+        //background game objects
+        
         //player game objects
-        //note: player must be last in list to show on top
-        this.lootC = this.add.rectangle(game.config.width/2, game.config.height/2 - borderUISize, borderUISize, borderUISize, 0xF50000).setOrigin(0.5);
         this.playerC = this.add.rectangle(game.config.width/2, game.config.height/2, borderUISize, borderUISize, 0xF5E050).setOrigin(0.5);
+        this.lootA = this.add.rectangle(Phaser.Math.Between(borderUISize, game.config.width - borderUISize), Phaser.Math.Between(borderUISize, game.config.height - borderUISize), borderUISize, borderUISize, 0xF50000).setOrigin(0.5);
+        this.lootA.alpha = 0;
+        
     }
 
     update() {
@@ -36,7 +39,10 @@ class Play extends Phaser.Scene {
         this.playerC.y = game.input.mousePointer.y;
         
         if(game.input.mousePointer.buttons > 0){
-            console.log('click');
+            if(this.checkCollision(this.playerC, this.lootA)){
+                console.log('treasure found!');
+                this.lootA.alpha = 1;
+            }
         }
     }
 
