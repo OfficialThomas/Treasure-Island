@@ -38,7 +38,7 @@ class Play extends Phaser.Scene {
         this.playerC.x = game.input.mousePointer.x;
         this.playerC.y = game.input.mousePointer.y;
         
-        if(game.input.mousePointer.buttons > 0){
+        if(game.input.mousePointer.buttons == 1){
             if(this.checkCollision(this.playerC, this.lootA)){
                 console.log('treasure found!');
                 this.lootA.alpha = 1;
