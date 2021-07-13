@@ -60,25 +60,49 @@ class Play extends Phaser.Scene {
         this.lootA.alpha = 0;
 
         //ui
-        this.add.image(borderUISize*2, borderUISize, 'timeUI');
-        this.add.image(game.config.width - borderUISize*3, borderUISize, 'chestUI');
-        this.timeVal = this.add.text(borderUISize*3.5, borderUISize, timeScore, gameText).setOrigin(0.5);
+        this.timeVal = this.add.text(borderUISize*5, borderUISize, timeScore, gameText).setOrigin(0.5);
         this.chestCount = 5;
         this.checkVal = this.add.text(game.config.width - borderUISize*1.5, borderUISize, this.chestCount, gameText).setOrigin(0.5);
+        this.add.image(borderUISize*2, borderUISize, 'timeUI');
+        this.add.image(game.config.width - borderUISize*3, borderUISize, 'chestUI');
         
+        //variables
+        this.gameEnd = false;
+        this.timeEnd = 2000;
     }
 
-    update() {
-        this.playerC.x = game.input.mousePointer.x;
-        this.playerC.y = game.input.mousePointer.y;
-        
-        if(game.input.mousePointer.buttons == 1){
-            if(this.checkCollision(this.playerC, this.lootA)){
-                console.log('treasure found!');
-                this.lootA.alpha = 1;
+    update(time, delta) {
+        if(!this.gameEnd){
+            timeScore += delta;
+            this.timeVal.text = Math.floor(timeScore/1000);
 
+            this.playerC.x = game.input.mousePointer.x;
+            this.playerC.y = game.input.mousePointer.y;
+        
+            if(game.input.mousePointer.buttons == 1){
+                if(this.checkCollision(this.playerC, this.lootA)){
+                    console.log('treasure found!');
+                    this.lootA.alpha = 1;
+
+                    this.chestCount -= 1;
+                    this.checkVal.text = this.chestCount;
+                    if(this.chestCount <= 0){
+                        this.gameEnd = true;
+                    }
+
+                    this.lootA = this.add.image(Phaser.Math.Between(borderUISize*2, game.config.width - borderUISize*2), Phaser.Math.Between(borderUISize*2, game.config.height - borderUISize*2), 'chest').setOrigin(0.5);
+                    this.lootA.alpha = 0;
+                }
             }
+
+        } else {
+            this.timeEnd -= delta;
+            if(this.timeEnd <= 0){
+                this.scene.start('endScene');
+            }
+
         }
+        
     }
 
     checkCollision(rocket, ship){

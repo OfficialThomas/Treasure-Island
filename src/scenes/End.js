@@ -23,9 +23,11 @@ class End extends Phaser.Scene {
         }
 
         this.add.text(game.config.width/2, game.config.height/2, 'End Scene', gameText).setOrigin(0.5);
+        this.add.text(game.config.width/2 - borderUISize*0.9, game.config.height/2 + borderUISize*2, 'Time:', gameText).setOrigin(0.5);
+        this.add.text(game.config.width/2 + borderUISize*2, game.config.height/2 + borderUISize*2, Math.floor(timeScore/1000), gameText).setOrigin(0.5);
     }
 
     update(){
-        this.scene.start('playScene');
+        //this.scene.start('playScene');
     }
 }
