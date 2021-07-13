@@ -37,6 +37,11 @@ class Play extends Phaser.Scene {
             fixedWidth: 0
         }
 
+        //music
+        this.music = this.sound.add('bgm_temp');
+        this.music.setLoop(true);
+        this.music.play();
+
         //background
         this.island = this.add.image(borderUISize*-4, 0, 'temp_island').setOrigin(0, 0);
         this.island.scale = 0.75;
