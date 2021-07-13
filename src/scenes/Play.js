@@ -87,7 +87,13 @@ class Play extends Phaser.Scene {
             } else{
                 this.playerC.x = game.input.mousePointer.x;
                 this.playerC.y = game.input.mousePointer.y;
-        
+
+                //metal detector
+                if(this.checkCollision(this.playerC, this.lootA)){
+                    this.sound.play('sfx_detected');
+                }
+                
+                //mouse click
                 if(game.input.mousePointer.buttons == 1){
                     if(this.checkCollision(this.playerC, this.lootA)){
                         this.lootA.alpha = 1;
@@ -108,6 +114,7 @@ class Play extends Phaser.Scene {
         } else {
             this.timeEnd -= delta;
             if(this.timeEnd <= 0){
+                this.music.stop();
                 this.scene.start('endScene');
             }
 
