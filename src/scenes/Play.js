@@ -4,6 +4,8 @@ class Play extends Phaser.Scene {
     }
 
     preload() {
+        //load any art for the scene here
+        this.load.image('temp_island', './assets/temp_island.png');
         
     }
 
@@ -22,10 +24,12 @@ class Play extends Phaser.Scene {
             fixedWidth: 0
         }
 
-        //text in background
+        //background
+        this.island = this.add.image(borderUISize*-4, 0, 'temp_island').setOrigin(0, 0);
+        this.island.scale = 0.75;
         this.add.text(game.config.width/2, game.config.height/2, 'Play Scene', gameText).setOrigin(0.5);
 
-        //background game objects
+        //background game objects (props)
         
         //player game objects
         this.playerC = this.add.rectangle(game.config.width/2, game.config.height/2, borderUISize, borderUISize, 0xF5E050).setOrigin(0.5);
