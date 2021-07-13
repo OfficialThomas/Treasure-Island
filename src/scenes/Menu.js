@@ -23,9 +23,12 @@ class Menu extends Phaser.Scene {
         }
 
         this.add.text(game.config.width/2, game.config.height/2, 'Menu Scene', gameText).setOrigin(0.5);
+        this.add.text(game.config.width/2, game.config.height/2 + borderUISize*2, 'Left Click on the mouse to start', gameText).setOrigin(0.5);
     }
 
     update(){
-        this.scene.start('playScene');
+        if(game.input.mousePointer.buttons == 1){
+            this.scene.start('playScene');
+        }
     }
 }

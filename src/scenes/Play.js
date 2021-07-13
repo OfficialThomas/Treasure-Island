@@ -69,6 +69,7 @@ class Play extends Phaser.Scene {
         //variables
         this.gameEnd = false;
         this.timeEnd = 2000;
+        this.digTimer = 0;
     }
 
     update(time, delta) {
@@ -76,22 +77,26 @@ class Play extends Phaser.Scene {
             timeScore += delta;
             this.timeVal.text = Math.floor(timeScore/1000);
 
-            this.playerC.x = game.input.mousePointer.x;
-            this.playerC.y = game.input.mousePointer.y;
+            if(this.digTimer > 0){
+                this.digTimer -= delta;
+            } else{
+                this.playerC.x = game.input.mousePointer.x;
+                this.playerC.y = game.input.mousePointer.y;
         
-            if(game.input.mousePointer.buttons == 1){
-                if(this.checkCollision(this.playerC, this.lootA)){
-                    console.log('treasure found!');
-                    this.lootA.alpha = 1;
+                if(game.input.mousePointer.buttons == 1){
+                    if(this.checkCollision(this.playerC, this.lootA)){
+                        this.lootA.alpha = 1;
 
-                    this.chestCount -= 1;
-                    this.checkVal.text = this.chestCount;
-                    if(this.chestCount <= 0){
-                        this.gameEnd = true;
+                        this.chestCount -= 1;
+                        this.checkVal.text = this.chestCount;
+                        if(this.chestCount <= 0){
+                            this.gameEnd = true;
+                        }
+
+                        this.lootA = this.add.image(Phaser.Math.Between(borderUISize*2, game.config.width - borderUISize*2), Phaser.Math.Between(borderUISize*2, game.config.height - borderUISize*2), 'chest').setOrigin(0.5);
+                        this.lootA.alpha = 0;
                     }
-
-                    this.lootA = this.add.image(Phaser.Math.Between(borderUISize*2, game.config.width - borderUISize*2), Phaser.Math.Between(borderUISize*2, game.config.height - borderUISize*2), 'chest').setOrigin(0.5);
-                    this.lootA.alpha = 0;
+                    this.digTimer = 2000;
                 }
             }
 
