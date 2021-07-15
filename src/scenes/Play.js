@@ -75,6 +75,8 @@ class Play extends Phaser.Scene {
         this.gameEnd = false;
         this.timeEnd = 2000;
         this.digTimer = 0;
+        this.soundTimer = 0;
+        this.detectMod = 2.5;
     }
 
     update(time, delta) {
@@ -89,9 +91,10 @@ class Play extends Phaser.Scene {
                 this.playerC.y = game.input.mousePointer.y;
 
                 //metal detector
-                if(this.checkCollision(this.playerC, this.lootA)){
-                    this.sound.play('sfx_detected');
+                if(this.soundTimer > 0){
+                    this.soundTimer -= delta;
                 }
+                this.metalDetector();
                 
                 //mouse click
                 if(game.input.mousePointer.buttons == 1){
@@ -122,6 +125,7 @@ class Play extends Phaser.Scene {
         
     }
 
+    //using method from rocket patrol
     checkCollision(rocket, ship){
         //simple AABB checking
         if (rocket.x < ship.x + ship.width && rocket.x + rocket.width > ship.x && rocket.y < ship.y + ship.height && rocket.height + rocket.y > ship.y){
@@ -129,5 +133,28 @@ class Play extends Phaser.Scene {
         } else {
             return false;
         }
+    }
+
+    //adjusted method from rocket patrol
+    checkCollisionWide(rocket, ship){
+        //simple AABB checking
+        if (rocket.x < ship.x + ship.width*this.detectMod && rocket.x + rocket.width*this.detectMod > ship.x && rocket.y < ship.y + ship.height*this.detectMod && rocket.height*this.detectMod + rocket.y > ship.y){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    metalDetector(){
+        if(this.checkCollision(this.playerC, this.lootA) && this.soundTimer <= 0){
+            //detection is close
+            this.sound.play('sfx_detected');
+            this.soundTimer = 500;
+        } else if(this.checkCollisionWide(this.playerC, this.lootA) && this.soundTimer <= 0){
+            //detection is far
+            this.sound.play('sfx_detected');
+            this.soundTimer = 1000;
+        }
+        return;
     }
 }
