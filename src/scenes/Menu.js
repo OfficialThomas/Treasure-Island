@@ -9,6 +9,10 @@ class Menu extends Phaser.Scene {
         //temp background music from https://mixkit.co/free-sound-effects/beach/ using a free licence
         this.load.audio('bgm_temp', './assets/bgm_temp.wav');
 
+        //load art
+        //temp
+        this.load.image('menu_temp', './assets/menu-screen.png');
+
     }
 
     create() {
@@ -26,8 +30,8 @@ class Menu extends Phaser.Scene {
             fixedWidth: 0
         }
 
-        this.add.text(game.config.width/2, game.config.height/2, 'Menu Scene', gameText).setOrigin(0.5);
-        this.add.text(game.config.width/2, game.config.height/2 + borderUISize*2, 'Left Click on the mouse to start', gameText).setOrigin(0.5);
+        //menu art
+        this.add.image(0, 0, 'menu_temp').setOrigin(0, 0);
     }
 
     update(){

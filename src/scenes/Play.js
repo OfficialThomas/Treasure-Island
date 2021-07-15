@@ -47,7 +47,7 @@ class Play extends Phaser.Scene {
         this.music.play();
 
         //background
-        this.island = this.add.image(borderUISize*-4, 0, 'island0').setOrigin(-0.2,0);
+        this.island = this.add.image(0, 0, 'island0').setOrigin(0, 0);
 
         //background game objects (props)
         
@@ -81,7 +81,7 @@ class Play extends Phaser.Scene {
         this.gameEnd = false;
         this.timeStart = false;
         this.timeEnd = 2000;
-        this.digTimer = 2000;
+        this.digTimer = 3000;
         this.soundTimer = 0;
         this.detectMod = 2.5;
     }
