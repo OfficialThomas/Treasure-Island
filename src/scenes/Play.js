@@ -9,6 +9,9 @@ class Play extends Phaser.Scene {
         this.load.image('temp_island', './assets/temp_island.png');
 
         //art
+        //background
+        this.load.image('island0', './assets/level0edit.png');
+
         //player
         this.load.spritesheet('idle', './assets/player_idle_animation.png', { frameWidth: 32, frameHeight: 32 });
         this.load.spritesheet('dig', './assets/Player_Digging_Animation.png', { frameWidth: 32, frameHeight: 32 });
@@ -26,10 +29,11 @@ class Play extends Phaser.Scene {
     create() {
         //text format
         let gameText = {
-            fontFamily: 'Impact',
+            fontFamily: 'Dancing Script',
             fontSize: '28px',
             color: '#000000',
-            align: 'center',
+            backgroundColor: '#FFFFFF',
+            align: 'right',
             padding: {
                 top: 5,
                 bottom: 5,
@@ -43,9 +47,7 @@ class Play extends Phaser.Scene {
         this.music.play();
 
         //background
-        this.island = this.add.image(borderUISize*-4, 0, 'temp_island').setOrigin(0, 0);
-        this.island.scale = 0.75;
-        this.add.text(game.config.width/2, game.config.height/2, 'Play Scene', gameText).setOrigin(0.5);
+        this.island = this.add.image(borderUISize*-4, 0, 'island0').setOrigin(-0.2,0);
 
         //background game objects (props)
         
@@ -57,7 +59,7 @@ class Play extends Phaser.Scene {
             frames: this.anims.generateFrameNumbers('idle'),
             frameRate: 12
         });
-        this.playerC = this.add.sprite(game.config.width/2, game.config.height/2, 'idle').setOrigin(0.75, 0.75);
+        this.playerC = this.add.sprite(game.config.width/2, game.config.height/2 + borderUISize*2, 'idle').setOrigin(0.75, 0.75);
         this.playerC.play({key: 'blinking', repeat: -1});
         
         //chest
@@ -65,28 +67,42 @@ class Play extends Phaser.Scene {
         this.lootA.alpha = 0;
 
         //ui
+        gameText.fixedWidth = 100;
         this.timeVal = this.add.text(borderUISize*5, borderUISize, timeScore, gameText).setOrigin(0.5);
         this.chestCount = 5;
+        gameText.fixedWidth = 0;
         this.checkVal = this.add.text(game.config.width - borderUISize*1.5, borderUISize, this.chestCount, gameText).setOrigin(0.5);
         this.add.image(borderUISize*2, borderUISize, 'timeUI');
         this.add.image(game.config.width - borderUISize*3, borderUISize, 'chestUI');
+        this.tutorial1 = this.add.text(game.config.width/2, game.config.height/2 - borderUISize, 'Follow the sound,', gameText).setOrigin(0.5);
+        this.tutorial2 = this.add.text(game.config.width/2, game.config.height/2, 'where ever it may be found...', gameText).setOrigin(0.5);
         
         //variables
         this.gameEnd = false;
+        this.timeStart = false;
         this.timeEnd = 2000;
-        this.digTimer = 0;
+        this.digTimer = 2000;
         this.soundTimer = 0;
         this.detectMod = 2.5;
     }
 
     update(time, delta) {
         if(!this.gameEnd){
-            timeScore += delta;
-            this.timeVal.text = Math.floor(timeScore/1000);
+            if(this.timeStart){
+                timeScore += delta;
+                this.timeVal.text = Math.floor(timeScore/1000);
+            }
 
             if(this.digTimer > 0){
                 this.digTimer -= delta;
             } else{
+                //hide the tutorial text
+                this.tutorial1.alpha = 0;
+                this.tutorial2.alpha = 0;
+
+                //start timer
+                this.timeStart = true;
+
                 this.playerC.x = game.input.mousePointer.x;
                 this.playerC.y = game.input.mousePointer.y;
 
