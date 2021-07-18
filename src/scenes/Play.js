@@ -32,7 +32,6 @@ class Play extends Phaser.Scene {
             fontFamily: 'Dancing Script',
             fontSize: '28px',
             color: '#000000',
-            backgroundColor: '#FFFFFF',
             align: 'right',
             padding: {
                 top: 5,
@@ -80,6 +79,7 @@ class Play extends Phaser.Scene {
         //variables
         this.gameEnd = false;
         this.timeStart = false;
+        this.nextLevel = false;
         this.timeEnd = 2000;
         this.digTimer = 3000;
         this.soundTimer = 0;
@@ -87,7 +87,7 @@ class Play extends Phaser.Scene {
     }
 
     update(time, delta) {
-        if(!this.gameEnd){
+        if(!this.gameEnd && !this.nextLevel){
             if(this.timeStart){
                 timeScore -= delta;
                 this.timeVal.text = Math.floor(timeScore/1000);
@@ -118,19 +118,20 @@ class Play extends Phaser.Scene {
                 if(game.input.mousePointer.buttons == 1){
                     if(this.checkCollision(this.playerC, this.lootA)){
                         this.lootA.alpha = 1;
-
                         chestCount += 1;
+                        timeScore += 5000;
                         this.checkVal.text = chestCount;
-                        if(chestCount/chestDiv == 5){
-                            chestDiv += 1;
-                            this.nextLevel = true;
-                        }
-
                         this.lootA = this.add.image(Phaser.Math.Between(borderUISize*2, game.config.width - borderUISize*2), Phaser.Math.Between(borderUISize*2, game.config.height - borderUISize*2), 'chest').setOrigin(0.5);
                         this.lootA.alpha = 0;
                     }
                     this.digTimer = 2000;
                 }
+            }
+
+            console.log(this.nextLevel);
+            if(chestCount/chestDiv == 5){
+                chestDiv += 1;
+                this.nextLevel = true;
             }
 
             if(timeScore <= 0){
@@ -139,7 +140,9 @@ class Play extends Phaser.Scene {
             }
 
         } else if(this.nextLevel){
-            this.scene.start('endScene');
+            //learned reset scene from here
+            //https://www.html5gamedevs.com/topic/35715-resetting-a-scene/
+            this.scene.restart();
         } else if(this.gameEnd){
             this.timeEnd -= delta;
             if(this.timeEnd <= 0){

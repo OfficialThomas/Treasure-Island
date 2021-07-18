@@ -11,7 +11,7 @@ let game = new Phaser.Game(config);
 let keyF, keyR, keyLEFT, keyRIGHT;
 
 //global stat vars
-let timeScore = 3000;
+let timeScore = 120000;
 let chestCount = 0;
 let chestDiv = 1;
 
