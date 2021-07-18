@@ -67,11 +67,11 @@ class Play extends Phaser.Scene {
         this.lootA.alpha = 0;
 
         //ui
-        gameText.fixedWidth = 100;
-        this.timeVal = this.add.text(borderUISize*5, borderUISize, timeScore, gameText).setOrigin(0.5);
-        this.chestCount = 5;
-        gameText.fixedWidth = 0;
-        this.checkVal = this.add.text(game.config.width - borderUISize*1.5, borderUISize, this.chestCount, gameText).setOrigin(0.5);
+        //time
+        this.timeVal = this.add.text(borderUISize*5, borderUISize, Math.floor(timeScore/1000), gameText).setOrigin(0.5);
+        //chests
+        this.checkVal = this.add.text(game.config.width - borderUISize*1.5, borderUISize, chestCount, gameText).setOrigin(0.5);
+        //text
         this.add.image(borderUISize*2, borderUISize, 'timeUI');
         this.add.image(game.config.width - borderUISize*3, borderUISize, 'chestUI');
         this.tutorial1 = this.add.text(game.config.width/2, game.config.height/2 - borderUISize, 'Follow the sound,', gameText).setOrigin(0.5);
@@ -83,7 +83,7 @@ class Play extends Phaser.Scene {
         this.timeEnd = 2000;
         this.digTimer = 3000;
         this.soundTimer = 0;
-        this.detectMod = 2.5;
+        this.detectMod = 2;
     }
 
     update(time, delta) {
@@ -91,6 +91,11 @@ class Play extends Phaser.Scene {
             if(this.timeStart){
                 timeScore -= delta;
                 this.timeVal.text = Math.floor(timeScore/1000);
+            }
+
+            //metal detector timer
+            if(this.soundTimer > 0){
+                this.soundTimer -= delta;
             }
 
             if(this.digTimer > 0){
@@ -103,24 +108,22 @@ class Play extends Phaser.Scene {
                 //start timer
                 this.timeStart = true;
 
+                //metal detector sound
+                this.metalDetector();
+
                 this.playerC.x = game.input.mousePointer.x;
                 this.playerC.y = game.input.mousePointer.y;
-
-                //metal detector
-                if(this.soundTimer > 0){
-                    this.soundTimer -= delta;
-                }
-                this.metalDetector();
                 
                 //mouse click
                 if(game.input.mousePointer.buttons == 1){
                     if(this.checkCollision(this.playerC, this.lootA)){
                         this.lootA.alpha = 1;
 
-                        this.chestCount -= 1;
-                        this.checkVal.text = this.chestCount;
-                        if(this.chestCount <= 0){
-                            this.gameEnd = true;
+                        chestCount += 1;
+                        this.checkVal.text = chestCount;
+                        if(chestCount/chestDiv == 5){
+                            chestDiv += 1;
+                            this.nextLevel = true;
                         }
 
                         this.lootA = this.add.image(Phaser.Math.Between(borderUISize*2, game.config.width - borderUISize*2), Phaser.Math.Between(borderUISize*2, game.config.height - borderUISize*2), 'chest').setOrigin(0.5);
@@ -130,7 +133,14 @@ class Play extends Phaser.Scene {
                 }
             }
 
-        } else {
+            if(timeScore <= 0){
+                this.timeVal.text = 0;
+                this.gameEnd = true;
+            }
+
+        } else if(this.nextLevel){
+            this.scene.start('endScene');
+        } else if(this.gameEnd){
             this.timeEnd -= delta;
             if(this.timeEnd <= 0){
                 this.music.stop();
@@ -165,11 +175,11 @@ class Play extends Phaser.Scene {
         if(this.checkCollision(this.playerC, this.lootA) && this.soundTimer <= 0){
             //detection is close
             this.sound.play('sfx_detected');
-            this.soundTimer = 50;
+            this.soundTimer = 200;
         } else if(this.checkCollisionWide(this.playerC, this.lootA) && this.soundTimer <= 0){
             //detection is far
             this.sound.play('sfx_detected');
-            this.soundTimer = 1000;
+            this.soundTimer = 500;
         }
         return;
     }

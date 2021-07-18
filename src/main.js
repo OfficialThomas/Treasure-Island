@@ -12,6 +12,8 @@ let keyF, keyR, keyLEFT, keyRIGHT;
 
 //global stat vars
 let timeScore = 3000;
+let chestCount = 0;
+let chestDiv = 1;
 
 //set UI sizes
 let borderUISize = game.config.height / 15;
