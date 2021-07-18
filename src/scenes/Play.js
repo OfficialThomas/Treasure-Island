@@ -89,7 +89,7 @@ class Play extends Phaser.Scene {
     update(time, delta) {
         if(!this.gameEnd){
             if(this.timeStart){
-                timeScore += delta;
+                timeScore -= delta;
                 this.timeVal.text = Math.floor(timeScore/1000);
             }
 
@@ -165,7 +165,7 @@ class Play extends Phaser.Scene {
         if(this.checkCollision(this.playerC, this.lootA) && this.soundTimer <= 0){
             //detection is close
             this.sound.play('sfx_detected');
-            this.soundTimer = 500;
+            this.soundTimer = 50;
         } else if(this.checkCollisionWide(this.playerC, this.lootA) && this.soundTimer <= 0){
             //detection is far
             this.sound.play('sfx_detected');
