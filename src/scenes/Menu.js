@@ -13,6 +13,9 @@ class Menu extends Phaser.Scene {
         //temp
         this.load.image('menu_temp', './assets/menu-screen.png');
 
+        //background
+        this.load.image('menu_screen', './assets/MainMenuDig.png');
+
     }
 
     create() {
@@ -31,7 +34,7 @@ class Menu extends Phaser.Scene {
         }
 
         //menu art
-        this.add.image(0, 0, 'menu_temp').setOrigin(0, 0);
+        this.add.image(0, 0, 'menu_screen').setOrigin(0, 0);
     }
 
     update(){
