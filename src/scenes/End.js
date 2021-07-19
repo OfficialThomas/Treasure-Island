@@ -16,6 +16,8 @@ class End extends Phaser.Scene {
             fontSize: '60px',
             color: '#FFFFFF',
             stroke: '#000000',
+            //learned stroke and strokeThickness here:
+            //https://photonstorm.github.io/phaser3-docs/Phaser.Types.GameObjects.Text.html
             strokeThickness: 2,
             align: 'right',
             padding: {

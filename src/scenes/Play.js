@@ -32,6 +32,8 @@ class Play extends Phaser.Scene {
             fontFamily: 'Dancing Script',
             fontSize: '28px',
             color: '#FFFFFF',
+            //learned stroke and strokeThickness here:
+            //https://photonstorm.github.io/phaser3-docs/Phaser.Types.GameObjects.Text.html
             stroke: '#000000',
             strokeThickness: 2,
             align: 'right',
@@ -175,15 +177,29 @@ class Play extends Phaser.Scene {
         }
     }
 
+    //adjusted method from rocket patrol
+    checkCollisionMax(rocket, ship){
+        //simple AABB checking
+        if (rocket.x < ship.x + ship.width*this.detectMod*2 && rocket.x + rocket.width*this.detectMod*2 > ship.x && rocket.y < ship.y + ship.height*this.detectMod*2 && rocket.height*this.detectMod*2 + rocket.y > ship.y){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     metalDetector(){
         if(this.checkCollision(this.playerC, this.lootA) && this.soundTimer <= 0){
             //detection is close
             this.sound.play('sfx_detected');
             this.soundTimer = 100;
         } else if(this.checkCollisionWide(this.playerC, this.lootA) && this.soundTimer <= 0){
-            //detection is far
+            //detection is near
             this.sound.play('sfx_detected');
             this.soundTimer = 300;
+        } else if(this.checkCollisionMax(this.playerC, this.lootA) && this.soundTimer <= 0){
+            //detection is far
+            this.sound.play('sfx_detected');
+            this.soundTimer = 500;
         }
         return;
     }
