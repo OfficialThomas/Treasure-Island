@@ -31,7 +31,9 @@ class Play extends Phaser.Scene {
         let gameText = {
             fontFamily: 'Dancing Script',
             fontSize: '28px',
-            color: '#000000',
+            color: '#FFFFFF',
+            stroke: '#000000',
+            strokeThickness: 2,
             align: 'right',
             padding: {
                 top: 5,

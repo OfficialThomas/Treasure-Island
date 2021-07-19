@@ -15,6 +15,8 @@ class End extends Phaser.Scene {
             fontFamily: 'Dancing Script',
             fontSize: '60px',
             color: '#FFFFFF',
+            stroke: '#000000',
+            strokeThickness: 2,
             align: 'right',
             padding: {
                 top: 5,
