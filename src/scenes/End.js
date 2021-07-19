@@ -4,6 +4,8 @@ class End extends Phaser.Scene {
     }
 
     preload(){
+        //background
+        this.load.image('endScreen', './assets/EndScreen-bird.png');
 
     }
 
@@ -11,8 +13,8 @@ class End extends Phaser.Scene {
         //text format
         let gameText = {
             fontFamily: 'Dancing Script',
-            fontSize: '28px',
-            color: '#000000',
+            fontSize: '60px',
+            color: '#FFFFFF',
             align: 'right',
             padding: {
                 top: 5,
@@ -21,12 +23,12 @@ class End extends Phaser.Scene {
             fixedWidth: 0
         }
 
-        this.add.text(game.config.width/2, game.config.height/2, 'End Scene', gameText).setOrigin(0.5);
-        this.add.text(game.config.width/2 - borderUISize*0.9, game.config.height/2 + borderUISize*2, 'Time:', gameText).setOrigin(0.5);
-        this.add.text(game.config.width/2 + borderUISize*2, game.config.height/2 + borderUISize*2, Math.floor(timeScore/1000), gameText).setOrigin(0.5);
+        //background
+        this.add.image(0, 0, 'endScreen').setOrigin(0, 0);
+        this.add.text(game.config.width/2 + borderUISize*6.5, game.config.height/2 - borderUISize*3.25, chestCount, gameText).setOrigin(0.5);
     }
 
     update(){
-        //this.scene.start('playScene');
+        
     }
 }

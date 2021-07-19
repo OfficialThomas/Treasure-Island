@@ -80,7 +80,7 @@ class Play extends Phaser.Scene {
         this.gameEnd = false;
         this.timeStart = false;
         this.nextLevel = false;
-        this.timeEnd = 2000;
+        this.timeEnd = 1500;
         this.soundTimer = 0;
         this.detectMod = 2;
     }
