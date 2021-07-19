@@ -10,11 +10,10 @@ class End extends Phaser.Scene {
     create() {
         //text format
         let gameText = {
-            fontFamily: 'Impact',
+            fontFamily: 'Dancing Script',
             fontSize: '28px',
             color: '#000000',
-            backgroundColor: '#F3B141',
-            align: 'center',
+            align: 'right',
             padding: {
                 top: 5,
                 bottom: 5,

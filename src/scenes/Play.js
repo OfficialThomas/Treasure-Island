@@ -67,7 +67,7 @@ class Play extends Phaser.Scene {
 
         //ui
         //time
-        this.timeVal = this.add.text(borderUISize*5, borderUISize, Math.floor(timeScore/1000), gameText).setOrigin(0.5);
+        this.timeVal = this.add.text(borderUISize*4, borderUISize, Math.floor(timeScore/1000), gameText).setOrigin(0.5);
         //chests
         this.checkVal = this.add.text(game.config.width - borderUISize*1.5, borderUISize, chestCount, gameText).setOrigin(0.5);
         //text
@@ -81,7 +81,6 @@ class Play extends Phaser.Scene {
         this.timeStart = false;
         this.nextLevel = false;
         this.timeEnd = 2000;
-        this.digTimer = 3000;
         this.soundTimer = 0;
         this.detectMod = 2;
     }
@@ -98,8 +97,8 @@ class Play extends Phaser.Scene {
                 this.soundTimer -= delta;
             }
 
-            if(this.digTimer > 0){
-                this.digTimer -= delta;
+            if(digTimer > 0){
+                digTimer -= delta;
             } else{
                 //hide the tutorial text
                 this.tutorial1.alpha = 0;
@@ -124,11 +123,10 @@ class Play extends Phaser.Scene {
                         this.lootA = this.add.image(Phaser.Math.Between(borderUISize*2, game.config.width - borderUISize*2), Phaser.Math.Between(borderUISize*2, game.config.height - borderUISize*2), 'chest').setOrigin(0.5);
                         this.lootA.alpha = 0;
                     }
-                    this.digTimer = 2000;
+                    digTimer = 2000;
                 }
             }
 
-            console.log(this.nextLevel);
             if(chestCount/chestDiv == 5){
                 chestDiv += 1;
                 this.nextLevel = true;
@@ -140,6 +138,7 @@ class Play extends Phaser.Scene {
             }
 
         } else if(this.nextLevel){
+            digTimer = 0;
             //learned reset scene from here
             //https://www.html5gamedevs.com/topic/35715-resetting-a-scene/
             this.scene.restart();

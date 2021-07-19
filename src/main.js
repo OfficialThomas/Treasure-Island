@@ -14,6 +14,7 @@ let keyF, keyR, keyLEFT, keyRIGHT;
 let timeScore = 120000;
 let chestCount = 0;
 let chestDiv = 1;
+let digTimer = 3000;
 
 //set UI sizes
 let borderUISize = game.config.height / 15;
