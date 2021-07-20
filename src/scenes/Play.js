@@ -10,7 +10,8 @@ class Play extends Phaser.Scene {
 
         //art
         //background
-        this.load.image('island0', './assets/level0edit.png');
+        this.load.image('ocean', './assets/water.png');
+        this.load.image('island1', './assets/level-1.png');
 
         //player
         this.load.spritesheet('idle', './assets/player_idle_animation.png', { frameWidth: 32, frameHeight: 32 });
@@ -50,9 +51,8 @@ class Play extends Phaser.Scene {
         this.music.play();
 
         //background
-        this.island = this.add.image(0, 0, 'island0').setOrigin(0, 0);
-
-        //background game objects (props)
+        this.ocean = this.add.image(0, 0, 'ocean').setOrigin(0, 0);
+        this.island = this.add.image(0, 0, 'island1').setOrigin(0, 0);
         
         //player
         //idle player
