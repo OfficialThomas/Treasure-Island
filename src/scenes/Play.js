@@ -143,7 +143,7 @@ class Play extends Phaser.Scene {
 
         } else if(this.nextLevel){
             this.music.stop();
-            digTimer = 1000;
+            digTimer = 2000;
             //learned reset scene from here
             //https://www.html5gamedevs.com/topic/35715-resetting-a-scene/
             this.scene.restart();
