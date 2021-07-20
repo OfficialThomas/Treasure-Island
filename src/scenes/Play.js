@@ -10,7 +10,11 @@ class Play extends Phaser.Scene {
 
         //art
         //background
-        this.load.image('island0', './assets/level0edit.png');
+        this.load.image('ocean', './assets/water.png');
+        this.load.image('island1', './assets/level-1.png');
+        this.load.image('island2', './assets/level-2.png');
+        this.load.image('island3', './assets/level-3.png');
+        this.load.image('island4', './assets/level-4.png');
 
         //player
         this.load.spritesheet('idle', './assets/player_idle_animation.png', { frameWidth: 32, frameHeight: 32 });
@@ -50,9 +54,24 @@ class Play extends Phaser.Scene {
         this.music.play();
 
         //background
-        this.island = this.add.image(0, 0, 'island0').setOrigin(0, 0);
-
-        //background game objects (props)
+        this.ocean = this.add.image(0, 0, 'ocean').setOrigin(0, 0);
+        switch(chestDiv % 4){
+            case 1:
+                this.island = this.add.image(0, 0, 'island1').setOrigin(0, 0);
+                break;
+            case 2:
+                this.island = this.add.image(0, 0, 'island2').setOrigin(0, 0);
+                break;
+            case 3:
+                this.island = this.add.image(0, 0, 'island3').setOrigin(0, 0);
+                break;
+            case 0:
+                this.island = this.add.image(0, 0, 'island4').setOrigin(0, 0);
+                break;
+            default:
+                this.island = this.add.image(0, 0, 'island1').setOrigin(0, 0);
+                break;
+        }
         
         //player
         //idle player
@@ -143,7 +162,7 @@ class Play extends Phaser.Scene {
 
         } else if(this.nextLevel){
             this.music.stop();
-            digTimer = 1000;
+            digTimer = 2000;
             //learned reset scene from here
             //https://www.html5gamedevs.com/topic/35715-resetting-a-scene/
             this.scene.restart();
