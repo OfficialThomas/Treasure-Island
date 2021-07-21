@@ -69,7 +69,7 @@ class Play extends Phaser.Scene {
         }
         
         //player
-        //idle player
+        //player animations
         //reference https://labs.phaser.io/edit.html?src=src/animation/animation%20repeat%20event.js&v=3.55.2
         const idleAnimation = this.anims.create({ 
             key: 'blinking',
@@ -87,7 +87,7 @@ class Play extends Phaser.Scene {
             frameRate: 14
         });
         this.playerC = this.add.sprite(game.config.width/2, game.config.height/2 + borderUISize*2, 'idle').setOrigin(0.75, 0.75);
-        this.playerC.play({key: 'blinking', repeat: -1});
+        //this.playerC.play({key: 'blinking', repeat: -1});
         
         //chest
         this.lootA = this.add.image(Phaser.Math.Between(borderUISize*3, game.config.width - borderUISize*3), Phaser.Math.Between(borderUISize*3, game.config.height - borderUISize*3), 'chest').setOrigin(0.5);
