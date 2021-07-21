@@ -16,7 +16,7 @@ class Menu extends Phaser.Scene {
         this.load.image('menu_temp', './assets/menu-screen.png');
 
         //title
-        this.load.image('title_card', './assets/tile-name-display.png');
+        this.load.image('title_card', './assets/title-name-display.png');
 
         //background
         this.load.image('menu_screen', './assets/MainMenu-bird.png');
@@ -38,15 +38,26 @@ class Menu extends Phaser.Scene {
             fixedWidth: 0
         }
         //music
+        //learned about set volume here
+        //https://rexrainbow.github.io/phaser3-rex-notes/docs/site/audio/
         this.music = this.sound.add('bgm_final');
+        this.music.setVolume(0.35);
         this.music.setLoop(true);
         this.music.play();
 
+        //water sounds
+        this.ambience = this.sound.add('bgm_temp');
+        this.ambience.setVolume(0.1);
+        this.ambience.setLoop(true);
+        this.ambience.play();
+
         //menu art
         this.add.image(0, 0, 'menu_screen').setOrigin(0, 0);
+        
 
         //title
-        this.add.image(borderUISize, borderUISize, 'title_card').setOrigin(0, 0);
+        this.title = this.add.image(borderUISize, borderUISize, 'title_card').setOrigin(0, 0);
+        this.title.setScale(0.5);
     }
 
     update(){
