@@ -17,9 +17,9 @@ class Play extends Phaser.Scene {
         this.load.image('island4', './assets/level-4.png');
 
         //player
-        this.load.spritesheet('idle', './assets/player_idle_animation.png', { frameWidth: 32, frameHeight: 32 });
-        this.load.spritesheet('dig', './assets/Player_Digging_Animation.png', { frameWidth: 32, frameHeight: 32 });
-        this.load.spritesheet('found', './assets/Player_Treasure_Animation.png', { frameWidth: 32, frameHeight: 32 });
+        this.load.spritesheet('idle', './assets/PlayerIdle-bird.png', { frameWidth: 32, frameHeight: 43 });
+        this.load.spritesheet('dig', './assets/PlayerDigging-bird.png', { frameWidth: 32, frameHeight: 43 });
+        this.load.spritesheet('found', './assets/PlayerTreasure3-bird.png', { frameWidth: 32, frameHeight: 43 });
         
         //objects
         this.load.image('chest', './assets/treasure_chest.png');
@@ -80,6 +80,16 @@ class Play extends Phaser.Scene {
             key: 'blinking',
             frames: this.anims.generateFrameNumbers('idle'),
             frameRate: 12
+        });
+        const digAnimation = this.anims.create({ 
+            key: 'digging',
+            frames: this.anims.generateFrameNumbers('dig'),
+            frameRate: 14
+        });
+        const detectAnimation = this.anims.create({ 
+            key: 'detected',
+            frames: this.anims.generateFrameNumbers('found'),
+            frameRate: 14
         });
         this.playerC = this.add.sprite(game.config.width/2, game.config.height/2 + borderUISize*2, 'idle').setOrigin(0.75, 0.75);
         this.playerC.play({key: 'blinking', repeat: -1});
