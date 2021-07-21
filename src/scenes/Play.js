@@ -111,14 +111,22 @@ class Play extends Phaser.Scene {
         
         //variables
         this.gameEnd = false;
-        this.timeStart = false;
+        this.gameStart = false;
         this.nextLevel = false;
+        this.timeStart = 5000;
         this.timeEnd = 1500;
         this.soundTimer = 0;
         this.detectMod = 2;
     }
 
     update(time, delta) {
+        //start timer
+        if(this.timeStart > 0){
+            this.timeStart -= delta;
+        } else {
+            this.gameStart = true;
+        }
+        
         if(!this.gameEnd && !this.nextLevel){
             if(this.timeStart){
                 timeScore -= delta;
@@ -137,9 +145,6 @@ class Play extends Phaser.Scene {
                 this.tutorial1.alpha = 0;
                 this.tutorial2.alpha = 0;
 
-                //start timer
-                this.timeStart = true;
-
                 //metal detector sound
                 this.metalDetector();
 
@@ -156,7 +161,7 @@ class Play extends Phaser.Scene {
                         this.lootA = this.add.image(Phaser.Math.Between(borderUISize*2, game.config.width - borderUISize*2), Phaser.Math.Between(borderUISize*2, game.config.height - borderUISize*2), 'chest').setOrigin(0.5);
                         this.lootA.alpha = 0;
                     }
-                    digTimer = 2000;
+                    digTimer = 1000;
                 }
             }
 
