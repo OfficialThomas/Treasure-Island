@@ -108,7 +108,7 @@ class Play extends Phaser.Scene {
         this.gameEnd = false;
         this.gameStart = false;
         this.nextLevel = false;
-        this.timeStart = 5000;
+        this.timeStart = 3000;
         this.timeEnd = 1500;
         this.soundTimer = 0;
         this.detectMod = 2;
@@ -124,9 +124,12 @@ class Play extends Phaser.Scene {
             this.timeStart -= delta;
         } else {
             this.gameStart = true;
+            //hide the tutorial text
+            this.tutorial1.alpha = 0;
+            this.tutorial2.alpha = 0;
         }
         
-        if(!this.gameEnd && !this.nextLevel){
+        if(!this.gameEnd && !this.nextLevel && this.gameStart){
             if(this.timeStart){
                 timeScore -= delta;
                 this.timeVal.text = Math.floor(timeScore/1000);
@@ -140,10 +143,6 @@ class Play extends Phaser.Scene {
             if(digTimer > 0){
                 digTimer -= delta;
             } else{
-                //hide the tutorial text
-                this.tutorial1.alpha = 0;
-                this.tutorial2.alpha = 0;
-
                 //metal detector sound
                 this.metalDetector();
 
@@ -164,6 +163,7 @@ class Play extends Phaser.Scene {
                 
                 //mouse click
                 if(game.input.mousePointer.buttons == 1){
+                    this.sound.play('dig_sound');
                     if(this.checkCollision(this.playerC, this.lootA)){
                         this.lootA.alpha = 1;
                         chestCount += 1;
