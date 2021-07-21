@@ -54,7 +54,7 @@ class Play extends Phaser.Scene {
         this.music.play();
 
         //background
-        this.ocean = this.add.image(0, 0, 'ocean').setOrigin(0, 0);
+        this.ocean = this.add.tileSprite(0, 0, 640, 480, 'ocean').setOrigin(0, 0);
         switch(chestDiv % 4){
             case 1:
                 this.island = this.add.image(0, 0, 'island1').setOrigin(0, 0);
@@ -95,7 +95,7 @@ class Play extends Phaser.Scene {
         this.playerC.play({key: 'blinking', repeat: -1});
         
         //chest
-        this.lootA = this.add.image(Phaser.Math.Between(borderUISize*2, game.config.width - borderUISize*2), Phaser.Math.Between(borderUISize*2, game.config.height - borderUISize*2), 'chest').setOrigin(0.5);
+        this.lootA = this.add.image(Phaser.Math.Between(borderUISize*3, game.config.width - borderUISize*3), Phaser.Math.Between(borderUISize*3, game.config.height - borderUISize*3), 'chest').setOrigin(0.5);
         this.lootA.alpha = 0;
 
         //ui
@@ -148,8 +148,20 @@ class Play extends Phaser.Scene {
                 //metal detector sound
                 this.metalDetector();
 
+                //movement
                 this.playerC.x = game.input.mousePointer.x;
                 this.playerC.y = game.input.mousePointer.y;
+                //movement correction
+                if(game.input.mousePointer.x < borderUISize*3){
+                    this.playerC.x = borderUISize*3;
+                } else if(game.input.mousePointer.x > game.config.width - borderUISize*3){
+                    this.playerC.x = game.config.width - borderUISize*3;
+                }
+                if(game.input.mousePointer.y < borderUISize*3){
+                    this.playerC.y = borderUISize*3;
+                } else if(game.input.mousePointer.y > game.config.height - borderUISize*3){
+                    this.playerC.y = game.config.height - borderUISize*3;
+                }
                 
                 //mouse click
                 if(game.input.mousePointer.buttons == 1){
@@ -158,7 +170,7 @@ class Play extends Phaser.Scene {
                         chestCount += 1;
                         timeScore += 5000;
                         this.checkVal.text = chestCount;
-                        this.lootA = this.add.image(Phaser.Math.Between(borderUISize*2, game.config.width - borderUISize*2), Phaser.Math.Between(borderUISize*2, game.config.height - borderUISize*2), 'chest').setOrigin(0.5);
+                        this.lootA = this.add.image(Phaser.Math.Between(borderUISize*3, game.config.width - borderUISize*3), Phaser.Math.Between(borderUISize*3, game.config.height - borderUISize*3), 'chest').setOrigin(0.5);
                         this.lootA.alpha = 0;
                     }
                     digTimer = 1000;
