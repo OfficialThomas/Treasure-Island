@@ -120,6 +120,10 @@ class Play extends Phaser.Scene {
     }
 
     update(time, delta) {
+        //water flowing
+        this.ocean.tilePositionX += 0.2;
+        this.ocean.tilePositionY += 0.3;
+
         //start timer
         if(this.timeStart > 0){
             this.timeStart -= delta;
