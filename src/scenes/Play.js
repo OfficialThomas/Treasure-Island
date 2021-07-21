@@ -48,11 +48,6 @@ class Play extends Phaser.Scene {
             fixedWidth: 0
         }
 
-        //music
-        this.music = this.sound.add('bgm_temp');
-        this.music.setLoop(true);
-        this.music.play();
-
         //background
         this.ocean = this.add.tileSprite(0, 0, 640, 480, 'ocean').setOrigin(0, 0);
         switch(chestDiv % 4){
@@ -192,7 +187,6 @@ class Play extends Phaser.Scene {
             }
 
         } else if(this.nextLevel){
-            this.music.stop();
             digTimer = 2000;
             //learned reset scene from here
             //https://www.html5gamedevs.com/topic/35715-resetting-a-scene/
@@ -200,7 +194,6 @@ class Play extends Phaser.Scene {
         } else if(this.gameEnd){
             this.timeEnd -= delta;
             if(this.timeEnd <= 0){
-                this.music.stop();
                 this.scene.start('endScene');
             }
 
