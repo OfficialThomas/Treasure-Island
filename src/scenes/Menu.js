@@ -5,7 +5,7 @@ class Menu extends Phaser.Scene {
 
     preload(){
         //load audio
-        this.load.audio('sfx_detected', './assets/Detected.wav');
+        this.load.audio('sfx_detected', './assets/parrot.mp3');
         //temp background music from https://mixkit.co/free-sound-effects/beach/ using a free licence
         this.load.audio('bgm_temp', './assets/bgm_temp.wav');
         //background music
