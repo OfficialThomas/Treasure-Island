@@ -5,7 +5,7 @@ class End extends Phaser.Scene {
 
     preload(){
         //background
-        this.load.image('endScreen', './assets/EndScreen-bird.png');
+        this.load.image('endScreen', './assets/EndScreen-OrangeFilter.png');
 
     }
 
