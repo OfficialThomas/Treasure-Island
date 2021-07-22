@@ -13,13 +13,13 @@ class End extends Phaser.Scene {
         //text format
         let gameText = {
             fontFamily: 'Dancing Script',
-            fontSize: '60px',
+            fontSize: '80px',
             color: '#FFFFFF',
             stroke: '#000000',
             //learned stroke and strokeThickness here:
             //https://photonstorm.github.io/phaser3-docs/Phaser.Types.GameObjects.Text.html
             strokeThickness: 2,
-            align: 'right',
+            align: 'left',
             padding: {
                 top: 5,
                 bottom: 5,
@@ -29,7 +29,7 @@ class End extends Phaser.Scene {
 
         //background
         this.add.image(0, 0, 'endScore').setOrigin(0, 0);
-        this.add.text(game.config.width/2 + borderUISize*3.25, game.config.height - borderUISize*1.5, chestCount, gameText).setOrigin(0.5);
+        this.add.text(game.config.width/2 + borderUISize*4, game.config.height - borderUISize*1.25, chestCount, gameText).setOrigin(0.5);
     }
 
     update(){
