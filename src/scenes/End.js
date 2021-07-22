@@ -29,10 +29,14 @@ class End extends Phaser.Scene {
             fixedWidth: 0
         }
 
+        //variables
+        this.drumTimer = 500;
+        this.playAgain = 5000;
+
         //background
         this.add.image(0, 0, 'endScore').setOrigin(0, 0);
         this.add.text(game.config.width/2 + borderUISize*4, game.config.height - borderUISize*1.25, chestCount, gameText).setOrigin(0.5);
-        
+        this.replay = this.add.text(borderUISize, borderUISize, Math.floor(this.playAgain), gameText).setOrigin(0.5);
         //drum chan <3
         const drumAnimation = this.anims.create({ 
             key: 'drumWalk',
@@ -41,12 +45,16 @@ class End extends Phaser.Scene {
         });
         this.drumChan = this.add.sprite(game.config.width/2 - borderUISize*5, game.config.height/2 + borderUISize*6.5, 'drum');
         this.drumChan.play({key: 'drumWalk', repeat: -1});
-
-        //variables
-        this.drumTimer = 500;
     }
 
     update(time, delta){
+        if(this.playAgain > 0){
+            this.playAgain -= delta;
+            this.replay.text = Math.floor(this.playAgain);
+        } else {
+            this.replay.text = 'Left Mouse Button to Dig Again'
+        }
+        
         //learned how to flip a sprite here
         //https://phasergames.com/how-to-flip-a-sprite-in-phaser-3/
         this.drumTimer -= delta;
