@@ -88,6 +88,9 @@ class Play extends Phaser.Scene {
             frameRate: 14
         });
         this.playerC = this.add.sprite(game.config.width/2, game.config.height/2 + borderUISize*2, 'idle').setOrigin(0.75, 0.75);
+        //player on top learned here
+        //https://www.youtube.com/watch?v=TTtgXd5qJko
+        this.playerC.depth = 100;
         this.playerC.play({key: 'blinking', repeat: -1});
         
         //chest
