@@ -163,7 +163,7 @@ class Play extends Phaser.Scene {
                 
                 //mouse click
                 if(game.input.mousePointer.buttons == 1){
-                    this.sound.play('dig_sound');
+                    
                     if(this.checkCollision(this.playerC, this.lootA)){
                         this.lootA.alpha = 1;
                         chestCount += 1;
@@ -171,6 +171,9 @@ class Play extends Phaser.Scene {
                         this.checkVal.text = chestCount;
                         this.lootA = this.add.image(Phaser.Math.Between(borderUISize*3, game.config.width - borderUISize*3), Phaser.Math.Between(borderUISize*3, game.config.height - borderUISize*3), 'chest').setOrigin(0.5);
                         this.lootA.alpha = 0;
+                        this.sound.play('chest_sound');
+                    } else {
+                        this.sound.play('dig_sound');
                     }
                     digTimer = 1000;
                 }
