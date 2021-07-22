@@ -23,6 +23,7 @@ class Play extends Phaser.Scene {
         
         //objects
         this.load.image('chest', './assets/treasure_chest.png');
+        this.load.image('dirt', './assets/dirt-hole.png');
 
         //ui
         this.load.image('chestUI', './assets/chests_left_sprite.png');
@@ -195,6 +196,7 @@ class Play extends Phaser.Scene {
                         this.sound.play('chest_sound');
                     } else {
                         this.sound.play('dig_sound');
+                        this.add.image(this.playerC.x - borderPadding, this.playerC.y + borderPadding, 'dirt');
                     }
                     this.isIdle = false;
                     this.playerC.texture = 'dig';
