@@ -5,7 +5,7 @@ class End extends Phaser.Scene {
 
     preload(){
         //background
-        this.load.image('endScreen', './assets/EndScreen-bird.png');
+        this.load.image('endScore', './assets/EndScreen-OrangeFilter.png');
 
     }
 
@@ -28,8 +28,8 @@ class End extends Phaser.Scene {
         }
 
         //background
-        this.add.image(0, 0, 'endScreen').setOrigin(0, 0);
-        this.add.text(game.config.width/2 + borderUISize*6.5, game.config.height/2 - borderUISize*3.25, chestCount, gameText).setOrigin(0.5);
+        this.add.image(0, 0, 'endScore').setOrigin(0, 0);
+        this.add.text(game.config.width/2 + borderUISize*6.5, game.config.height - borderUISize*1, chestCount, gameText).setOrigin(0.5);
     }
 
     update(){
