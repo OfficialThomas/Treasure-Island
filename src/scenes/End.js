@@ -36,7 +36,8 @@ class End extends Phaser.Scene {
         //background
         this.add.image(0, 0, 'endScore').setOrigin(0, 0);
         this.add.text(game.config.width/2 + borderUISize*4, game.config.height - borderUISize*1.25, chestCount, gameText).setOrigin(0.5);
-        this.replay = this.add.text(borderUISize, borderUISize, Math.floor(this.playAgain), gameText).setOrigin(0.5);
+        gameText.fontSize = 30;
+        this.replay = this.add.text(game.config.width/2, borderUISize, Math.floor(this.playAgain/1000), gameText).setOrigin(0.5);
         //drum chan <3
         const drumAnimation = this.anims.create({ 
             key: 'drumWalk',
@@ -50,9 +51,16 @@ class End extends Phaser.Scene {
     update(time, delta){
         if(this.playAgain > 0){
             this.playAgain -= delta;
-            this.replay.text = Math.floor(this.playAgain);
+            this.replay.text = Math.floor(this.playAgain/1000);
         } else {
             this.replay.text = 'Left Mouse Button to Dig Again'
+            if(game.input.mousePointer.buttons == 1){
+                timeScore = 180000;
+                chestCount = 0;
+                chestDiv = 1;
+                digTimer = 0;
+                this.scene.start('playScene');
+            }
         }
         
         //learned how to flip a sprite here
