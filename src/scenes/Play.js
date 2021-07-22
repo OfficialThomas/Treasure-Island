@@ -87,7 +87,7 @@ class Play extends Phaser.Scene {
             frameRate: 14
         });
         this.playerC = this.add.sprite(game.config.width/2, game.config.height/2 + borderUISize*2, 'idle').setOrigin(0.75, 0.75);
-        //this.playerC.play({key: 'blinking', repeat: -1});
+        this.playerC.play({key: 'blinking', repeat: -1});
         
         //chest
         this.lootA = this.add.image(Phaser.Math.Between(borderUISize*3, game.config.width - borderUISize*3), Phaser.Math.Between(borderUISize*3, game.config.height - borderUISize*3), 'chest').setOrigin(0.5);
@@ -112,6 +112,11 @@ class Play extends Phaser.Scene {
         this.timeEnd = 1500;
         this.soundTimer = 0;
         this.detectMod = 2;
+
+        //animation variables
+        this.isIdle = true;
+        this.alertTimer = 0;
+        this.diggingTimer = 0;
     }
 
     update(time, delta) {
@@ -128,6 +133,18 @@ class Play extends Phaser.Scene {
             this.tutorial1.alpha = 0;
             this.tutorial2.alpha = 0;
         }
+
+        //reset animation
+        if(this.diggingTimer > 0){
+            this.diggingTimer -= delta;
+        } 
+        if(this.alertTimer > 0){
+            this.alertTimer -= delta;
+        }
+        if(!this.isIdle && this.alertTimer <= 0 && this.diggingTimer <= 0){
+            this.playerC.play({key: 'blinking', repeat: -1});
+            this.isIdle = true;
+        }
         
         if(!this.gameEnd && !this.nextLevel && this.gameStart){
             if(this.timeStart){
@@ -143,8 +160,12 @@ class Play extends Phaser.Scene {
             if(digTimer > 0){
                 digTimer -= delta;
             } else{
-                //metal detector sound
-                this.metalDetector();
+                //chest detection plays animation when close
+                if(this.metalDetector() && this.alertTimer <= 0){
+                    this.playerC.play({key: 'detected', repeat: -1});
+                    this.alertTimer = 1000;
+                    this.isIdle = false;
+                }
 
                 //movement
                 this.playerC.x = game.input.mousePointer.x;
@@ -175,6 +196,10 @@ class Play extends Phaser.Scene {
                     } else {
                         this.sound.play('dig_sound');
                     }
+                    this.isIdle = false;
+                    this.playerC.texture = 'dig';
+                    this.playerC.play({key: 'digging', repeat: -1});
+                    this.diggingTimer = 1000;
                     digTimer = 1000;
                 }
             }
@@ -238,15 +263,18 @@ class Play extends Phaser.Scene {
             //detection is close
             this.sound.play('sfx_detected');
             this.soundTimer = 100;
+            return true;
         } else if(this.checkCollisionWide(this.playerC, this.lootA) && this.soundTimer <= 0){
             //detection is near
             this.sound.play('sfx_detected');
             this.soundTimer = 300;
+            return false;
         } else if(this.checkCollisionMax(this.playerC, this.lootA) && this.soundTimer <= 0){
             //detection is far
             this.sound.play('sfx_detected');
             this.soundTimer = 500;
+            return false;
         }
-        return;
+        return false;
     }
 }
