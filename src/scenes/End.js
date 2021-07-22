@@ -39,11 +39,23 @@ class End extends Phaser.Scene {
             frames: this.anims.generateFrameNumbers('drum'),
             frameRate: 8
         });
-        this.drumChan = this.add.sprite(game.config.width/2, game.config.height/2 + borderUISize*2, 'drum');
+        this.drumChan = this.add.sprite(game.config.width/2 - borderUISize*5, game.config.height/2 + borderUISize*6.5, 'drum');
         this.drumChan.play({key: 'drumWalk', repeat: -1});
+
+        //variables
+        this.drumTimer = 500;
     }
 
-    update(){
-        
+    update(time, delta){
+        //learned how to flip a sprite here
+        //https://phasergames.com/how-to-flip-a-sprite-in-phaser-3/
+        this.drumTimer -= delta;
+        if(this.drumTimer <= 0 && this.drumChan.flipX == false){
+            this.drumChan.flipX = true;
+            this.drumTimer = 500;
+        } else if(this.drumTimer <= 0 && this.drumChan.flipX == true){
+            this.drumChan.flipX = false;
+            this.drumTimer = 500;
+        }
     }
 }
